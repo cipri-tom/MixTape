@@ -2,6 +2,7 @@
   // Remember to copy files from the SDK's src/ directory to a
   // directory in your application on the server, such as php-sdk/
   require_once("facebook-php-sdk/src/facebook.php");
+  require_once("Services/Soundcloud.php");
 
   if (isset($_GET['logout']) && $_GET['logout'] == true) {
      setcookie('PHPSESSID', '', time()-3600, '/');
@@ -77,6 +78,8 @@
             $facebook = new Facebook($config);
             $user_id = $facebook->getUser();
 
+            $sc_client = new Services_Soundcloud('defe41aed87b334bb8353082e4e5ae56');
+
             if($user_id) {
               // We have a user ID, so probably a logged in user.
               // If not, we'll get an exception, which we handle below.
@@ -88,7 +91,19 @@
 
                 $logout_url = $facebook->getLogoutUrl($params);
                 echo "<a href=" . $logout_url . ">Logout</a>";
-                $user_music = $facebook->api('/me/music', 'GET');
+                $user_friends = $facebook->api('/me?fields=friends.limit(500)',
+                                               'GET');
+
+                echo "<h3>Your facebook friends who are also on Soundcloud:</h3>";
+
+                foreach($user_friends["friends"]["data"] as $user) {
+                  // echo "FB: " . $user["name"] . " " . $user["location"];
+                  $sc_users_string = $sc_client->get('users',
+                     array('q' => $user["name"], 'limit' => 1));
+                  $sc_users = json_decode($sc_users_string, $assoc = true);
+                  if ($sc_users[0]["full_name"] == $user["name"] )
+                     echo $sc_users[0]["full_name"] . "<br />";;
+                }
               }
               catch(FacebookApiException $e) {
                 // If the user is logged out, you can have a

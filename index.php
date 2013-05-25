@@ -1,3 +1,23 @@
+<?php
+  // Remember to copy files from the SDK's src/ directory to a
+  // directory in your application on the server, such as php-sdk/
+  require_once("facebook-php-sdk/src/facebook.php");
+
+  if (isset($_GET['logout']) && $_GET['logout'] == true) {
+     setcookie('PHPSESSID', '', time()-3600, '/');
+     session_destroy();
+     header('Location: http://localhost/MixTape');
+  }
+
+  $config = array(
+    'appId' => '183241951834877',
+    'secret' => '2395a79d0012892b85ed87ecb617bbf4',
+  );
+
+  $facebook = new Facebook($config);
+  //$user_id = $facebook->getUser();
+?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-GB">
 <head>
@@ -26,7 +46,7 @@
    <div class="colmid">
       <div class="colleft">
          <div class="col1">
-            <!-- Column 1 start -->
+            <!-- Column 1 start ==== MIDDLE ==== -->
             <h2>Percentage dimensions of the holy grail layout</h2>
             <img src="perfect-3-column-dimensions.gif" width="350" height="370" alt="Three column layout dimensions" />
             <p>All the dimensions are in percentage widths so the layout adjusts to any screen resolution. Vertical dimensions are not set so they stretch to the height of the content.</p>
@@ -47,27 +67,48 @@
             <!-- Column 1 end -->
          </div>
          <div class="col2">
-            <!-- Column 2 start -->
-            <h2>No CSS hacks</h2>
-            <p>The CSS used for this layout is 100% valid and hack free. To overcome Internet Explorer's broken box model, no horizontal padding or margins are used in conjunction with a width. Instead, this design uses percentage widths and clever relative positioning.</p>
-            <h2>SEO friendly 2-1-3 column ordering</h2>
-            <p>The higher up content is in your page code, the more important it is considered by search engine algorithms (see my article on <a href="http://matthewjamestaylor.com/blog/link-source-ordering-seo">link source ordering</a> for more details on how this affects links). To make your website as optimised as possible, your main page content must come before the side columns. This layout does exactly that: The center page comes first, then the left column and finally the right column (see the nested div structure diagram for more info). The columns can also be configured to any other order if required.</p>
-            <h2>Full length column background colours</h2>
-            <p>In this layout the background colours of each column will always stretch to the length of the longest column. This feature was traditionally only available with table based layouts but now with a little CSS trickery we can do exactly the same with divs. Say goodbye to annoying short columns! You can read my article on <a href="http://matthewjamestaylor.com/blog/equal-height-columns-cross-browser-css-no-hacks">equal height columns</a> if you want to see how this is done.</p>
-            <h2>No Images</h2>
-            <p>This layout requires no images. Many CSS website designs need images to colour in the column backgrounds but that is not necessary with this design. Why waste bandwidth and precious HTTP requests when you can do everything in pure CSS and XHTML?</p>
-            <h2>No JavaScript</h2>
-            <p>JavaScript is not required. Some website layouts rely on JavaScript hacks to resize divs and force elements into place but you won't see any of that nonsense here. The JavaScript at the bottom of this page is just my Google Analytics tracking code, you can remove this when you use the layout.</p>
-            <h2>Resizable text compatible</h2>
-            <p>This layout is fully compatible with resizable text. Resizable text is important for web accessibility. People who are vision impaired can make the text larger so it's easier for them to read. It is becoming increasingly more important to make your website resizable text compatible because people are expecting higher levels of web accessibility. Apple have made resizing the text on a website simple with the pinch gesture on their multi-touch trackpad. Is your website text-resizing compatible?</p>
-            <h2>No Quirks Mode</h2>
-            <p>This liquid layout does not require the XML declaration for it to display correctly in older versions of Internet Explorer. This version works without it and is thus never in quirks mode.</p>
-            <h2>No IE Conditional Comments</h2>
-            <p>Only one stylesheet is used with this layout This means that IE conditional comments are not needed to set extra CSS rules for older versions of Internet Explorer.</p>
+            <!-- Column 2 start ==== LEFT ==== -->
+            <?php
+            $config = array(
+               'appId' => '183241951834877',
+               'secret' => '2395a79d0012892b85ed87ecb617bbf4',
+            );
+
+            $facebook = new Facebook($config);
+            $user_id = $facebook->getUser();
+
+            if($user_id) {
+              // We have a user ID, so probably a logged in user.
+              // If not, we'll get an exception, which we handle below.
+              try {
+                $user_profile = $facebook->api('/me','GET');
+                echo "<h4>Logged in as <u>" . $user_profile['name'] . "</u></h4>";
+                $params = array( 'next' => 'http://localhost/MixTape?logout=true',
+                                 'access_token'=>$facebook->getAccessToken() );
+
+                $logout_url = $facebook->getLogoutUrl($params);
+                echo "<a href=" . $logout_url . ">Logout</a>";
+                $user_music = $facebook->api('/me/music', 'GET');
+              }
+              catch(FacebookApiException $e) {
+                // If the user is logged out, you can have a
+                // user ID even though the access token is invalid.
+                // In this case, we'll get an exception, so we'll
+                // just ask the user to login again here.
+                $login_url = $facebook->getLoginUrl();
+                echo 'Please <a href="' . $login_url . '">login.</a>';
+              }
+            }
+            else {
+              // No user, print a link for the user to login
+              $login_url = $facebook->getLoginUrl();
+              echo 'Please <a href="' . $login_url . '">login.</a>';
+            }
+            ?>
             <!-- Column 2 end -->
          </div>
          <div class="col3">
-            <!-- Column 3 start -->
+            <!-- Column 3 start ==== RIGHT ==== -->
             <div id="ads">
                <a href="http://matthewjamestaylor.com">
                   <img src="mjt-125x125.gif" width="125" border="0" height="125" alt="Art and Design by Matthew James Taylor" />

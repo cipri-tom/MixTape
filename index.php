@@ -1,30 +1,23 @@
 <?php
-  // Remember to copy files from the SDK's src/ directory to a
-  // directory in your application on the server, such as php-sdk/
-  require_once("facebook-php-sdk/src/facebook.php");
-  require_once("Services/Soundcloud.php");
-
+// on logout
   if (isset($_GET['logout']) && $_GET['logout'] == true) {
      setcookie('PHPSESSID', '', time()-3600, '/');
      session_destroy();
      header('Location: http://localhost/MixTape');
   }
 
-  $config = array(
-    'appId' => '183241951834877',
-    'secret' => '2395a79d0012892b85ed87ecb617bbf4',
-  );
-
-  $facebook = new Facebook($config);
-  //$user_id = $facebook->getUser();
+include("functions.php");
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-GB">
 <head>
+   <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
    <title>MixTape</title>
    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
    <link rel="stylesheet" type="text/css" href="screen.css" media="screen" />
+   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+   <script type="text/javascript" src='./load.js'></script>
 </head>
 <body>
 
@@ -48,79 +41,61 @@
       <div class="colleft">
          <div class="col1">
             <!-- Column 1 start ==== MIDDLE ==== -->
-            <h2>Percentage dimensions of the holy grail layout</h2>
-            <img src="perfect-3-column-dimensions.gif" width="350" height="370" alt="Three column layout dimensions" />
-            <p>All the dimensions are in percentage widths so the layout adjusts to any screen resolution. Vertical dimensions are not set so they stretch to the height of the content.</p>
-            <h3>Maximum column content widths</h3>
-            <p>To prevent wide content (like long URLs) from destroying the layout (long content can make the page scroll horizontally) the column content divs are set to overflow:hidden. This chops off any content that is wider than the div. Because of this, it's important to know the maximum widths allowable at common screen resolutions. For example, if you choose 800 x 600 pixels as your minimum compatible resolution what is the widest image that can be safely added to each column before it gets chopped off? Here are the figures:</p>
-            <dl>
-               <dt><strong>800 x 600</strong></dt>
-               <dd>Left &amp; right columns: 162 pixels</dd>
-               <dd>Center page: 357 pixels</dd>
-               <dt><strong>1024 x 768</strong></dt>
-               <dd>Left &amp; right columns: 210 pixels</dd>
-               <dd>Center page: 459 pixels</dd>
-            </dl>
-            <h2>The nested div structure</h2>
-            <p>I've colour coded each div so it's easy to see:</p>
-            <img src="perfect-3-column-div-structure.gif" width="350" height="369" alt="Three column layout nested div structure" />
-            <p>The header, colmask and footer divs are 100% wide and stacked vertically one after the other. Colmid is inside colmask and colleft is inside colmid. The three column content divs (col1, col2 &amp; col3) are inside colleft. Notice that the main content column (col1) comes before the other columns.</p>
+
             <!-- Column 1 end -->
          </div>
          <div class="col2">
-            <!-- Column 2 start ==== LEFT ==== -->
-            <?php
-            $config = array(
-               'appId' => '183241951834877',
-               'secret' => '2395a79d0012892b85ed87ecb617bbf4',
-            );
+         <!-- Column 2 start ==== LEFT ==== -->
+         <?php
+         // do initialisations any log the user in
+         require_once("facebook-php-sdk/src/facebook.php");
+         require_once("Services/Soundcloud.php");
 
-            $facebook = new Facebook($config);
-            $user_id = $facebook->getUser();
+         $config = array(
+            'appId' => '183241951834877',
+            'secret' => '2395a79d0012892b85ed87ecb617bbf4',
+         );
 
-            $sc_client = new Services_Soundcloud('defe41aed87b334bb8353082e4e5ae56');
+         $facebook = new Facebook($config);
+         $user_id = $facebook->getUser();
 
-            if($user_id) {
-              // We have a user ID, so probably a logged in user.
-              // If not, we'll get an exception, which we handle below.
-              try {
-                $user_profile = $facebook->api('/me','GET');
-                echo "<h4>Logged in as <u>" . $user_profile['name'] . "</u></h4>";
-                $params = array( 'next' => 'http://localhost/MixTape?logout=true',
-                                 'access_token'=>$facebook->getAccessToken() );
+         $sc_client = new Services_Soundcloud('defe41aed87b334bb8353082e4e5ae56');
 
-                $logout_url = $facebook->getLogoutUrl($params);
-                echo "<a href=" . $logout_url . ">Logout</a>";
-                $user_friends = $facebook->api('/me?fields=friends.limit(500)',
-                                               'GET');
+         if($user_id) {
+            // We have a user ID, so probably a logged in user.
+            // If not, we'll get an exception, which we handle below.
+            try {
+               $user_profile = $facebook->api('/me','GET');
+               $user_friends = $facebook->api('/me/friends', 'GET');
+               $params = array( 'next' => 'http://localhost/MixTape?logout=true',
+                              'access_token'=>$facebook->getAccessToken() );
 
-                echo "<h3>Your facebook friends who are also on Soundcloud:</h3>";
+               $logout_url = $facebook->getLogoutUrl($params);
+               echo   "<h4 style='display:inline; margin-right: 5px;'>"
+                    . "Logged in as <u>" . $user_profile['name'] . "</u></h4>"
+                    . "<a href=" . $logout_url . ">Logout</a>";
 
-                foreach($user_friends["friends"]["data"] as $user) {
-                  // echo "FB: " . $user["name"] . " " . $user["location"];
-                  $sc_users_string = $sc_client->get('users',
-                     array('q' => $user["name"], 'limit' => 1));
-                  $sc_users = json_decode($sc_users_string, $assoc = true);
-                  if ($sc_users[0]["full_name"] == $user["name"] )
-                     echo $sc_users[0]["full_name"] . "<br />";;
-                }
-              }
-              catch(FacebookApiException $e) {
-                // If the user is logged out, you can have a
-                // user ID even though the access token is invalid.
-                // In this case, we'll get an exception, so we'll
-                // just ask the user to login again here.
-                $login_url = $facebook->getLoginUrl();
-                echo 'Please <a href="' . $login_url . '">login.</a>';
-              }
+               echo "<br/><a id='showFriends' href='#' onClick ='loadFriends()' >Show Soundcloud friends:</a>";
+               echo "<input id ='size' type='text' size='4' value='50'> / "
+                  . count($user_friends["data"])
+                  . "</input>";
             }
-            else {
-              // No user, print a link for the user to login
-              $login_url = $facebook->getLoginUrl();
-              echo 'Please <a href="' . $login_url . '">login.</a>';
+            catch(FacebookApiException $e) {
+               // If the user is logged out, you can have a
+               // user ID even though the access token is invalid.
+               // In this case, we'll get an exception, so we'll
+               // just ask the user to login again here.
+               $login_url = $facebook->getLoginUrl();
+               echo 'Please <a href="' . $login_url . '">login.</a>';
             }
-            ?>
-            <!-- Column 2 end -->
+         } /// if
+         else {
+            // No user, print a link for the user to login
+            $login_url = $facebook->getLoginUrl();
+            echo 'Please <a href="' . $login_url . '">login.</a>';
+         }
+         ?>
+         <!-- Column 2 end -->
          </div>
          <div class="col3">
             <!-- Column 3 start ==== RIGHT ==== -->

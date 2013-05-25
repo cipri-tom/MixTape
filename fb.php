@@ -2,14 +2,6 @@
   // Remember to copy files from the SDK's src/ directory to a
   // directory in your application on the server, such as php-sdk/
   require_once("facebook-php-sdk/src/facebook.php");
-
-  $config = array(
-    'appId' => '183241951834877',
-    'secret' => '2395a79d0012892b85ed87ecb617bbf4',
-  );
-
-  $facebook = new Facebook($config);
-  $user_id = $facebook->getUser();
 ?>
 <html>
   <head>
@@ -18,7 +10,14 @@
   <body>
 
   <?php
-    function connect() {
+    $config = array(
+    'appId' => '183241951834877',
+    'secret' => '2395a79d0012892b85ed87ecb617bbf4',
+  );
+
+  $facebook = new Facebook($config);
+  $user_id = $facebook->getUser();
+
       if($user_id) {
         // We have a user ID, so probably a logged in user.
         // If not, we'll get an exception, which we handle below.
@@ -26,8 +25,6 @@
           $user_profile = $facebook->api('/me','GET');
           echo "Name: " . $user_profile['name'];
           $user_music = $facebook->api('/me/music', 'GET');
-
-
         }
         catch(FacebookApiException $e) {
           // If the user is logged out, you can have a
@@ -45,7 +42,6 @@
         $login_url = $facebook->getLoginUrl();
         echo 'Please <a href="' . $login_url . '">login.</a>';
       }
-    }
   ?>
 
   </body>

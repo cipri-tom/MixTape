@@ -145,7 +145,7 @@
                   }
             } // for
 
-            echo  "<input type=\"checkbox\" id='imgChk' checked='true' />Images(Uncheck if on a slow connection)<br/>";
+            echo  "<input type=\"checkbox\" id='imgChk' checked='true' /><span style='font-size:87%;'>Images(Uncheck if on a slow connection)</span><br/>";
 
             echo "<table>";
             echo "<tr>";
@@ -195,16 +195,18 @@
       if ($artists = $artistClass->getSimilar($methodVars))
          foreach ($artists as $similar) {
             $elem = "<td>";
-            if ($img && ! ($info = $artistClass->getInfo(array('artist' => $similar["name"])))
-                || (!($image = $info["image"]["large"]) &&
-                    !($image = $info["image"]["medium"])))
-                  $image = "./images/noimage.jpg";
+            var_dump($similar);
+            break;
+            // if ($img && ! ($info = $artistClass->getInfo(array('artist' => $similar["name"])))
+            //     || (!($image = $info["image"]["large"]) &&
+            //         !($image = $info["image"]["medium"])))
+            //       $image = "./images/noimage.jpg";
 
-            if ($img)
-               $elem = $elem . "<img src=\"$image\" width=200px/>";
-            echo $elem . "{$similar['name']}</td>";
-            if ($index % 3 == 0)
-               echo "</tr>";
+            // if ($img)
+            //    $elem = $elem . "<img src=\"$image\" width=200px/>";
+            // echo $elem . "{$similar['name']}</td>";
+            // if ($index % 3 == 0)
+            //    echo "</tr>";
             $index++;
          }
       if ($index % 3 != 1)

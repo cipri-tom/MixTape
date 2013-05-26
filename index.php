@@ -75,8 +75,8 @@ include("functions.php");
                     . "<a href=" . $logout_url . ">Logout</a>";
 
                echo "<br/><a id='showFriends' href='#' onClick ='loadFriends()' >Show Soundcloud friends:</a>";
-               echo "<input id ='size' type='text' size='4' value='10'> / "
-                  . count($user_friends["data"])
+               echo "<input id='size' type='text' size='4' value='10'>"
+                  . "<span id ='size1'>/" . count($user_friends["data"]) . "</span>"
                   . "</input>";
             }
             catch(FacebookApiException $e) {
@@ -110,7 +110,7 @@ include("functions.php");
    </div>
 </div>
 <div id="footer">
-   <p>This page uses the <a href="http://matthewjamestaylor.com/blog/perfect-3-column.htm">Perfect 'Holy Grail' 3 Column Liquid Layout</a> by <a href="http://matthewjamestaylor.com">Matthew James Taylor</a>. View more <a href="http://matthewjamestaylor.com/blog/-website-layouts">website layouts</a> and <a href="http://matthewjamestaylor.com/blog/-web-design">web design articles</a>.</p>
+   <p>Footer @ Under Construction</p>
 </div>
 
 </body>

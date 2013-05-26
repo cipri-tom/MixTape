@@ -78,7 +78,7 @@
       else {
         // No user, print a link for the user to login
         $login_url = $facebook->getLoginUrl();
-        echo 'Please <a href="' . $login_url . '">login.</a>';
+        //echo 'Please <a href="' . $login_url . '">login.</a>';
       }
       return $sc_users;
   } // fillLeft

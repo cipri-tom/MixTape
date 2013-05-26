@@ -22,12 +22,11 @@ include("functions.php");
 <body>
 
 <div id="header">
-   <h1>MixTape - All your friends, all their music</h1>
+   <h1>All your friends, all their music</h1>
    <h2>See what your friends have shared on Soundcloud and listen for free to their music</h2>
    <ul>
-      <li><a href='index.php'>SoundCloud</a></li>
-      <li><a href='recom.php'>Recommendations</a></li>
-      <li><a>Service 3</a></li>
+      <li><a href='index.php'>Friends on<br/>SoundCloud</a></li>
+      <li><a href='recom.php'>Recommendations<br/>for my taste</a></li>
       <li></li>
       <li></li>
       <li></li>
@@ -95,7 +94,7 @@ include("functions.php");
             </div>
             <h2>Some other cool features here</h2>
             <p>Or maybe some ads</p>
-
+            <img src='images/tape.gif'/>
             <!-- Column 3 end -->
          </div>
       </div>

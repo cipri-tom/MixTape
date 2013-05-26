@@ -37,6 +37,9 @@ img {
 	clear:both;
 	float:left;
 	width:100%;
+	min-heightheight: 55%;
+	background: url("images/mixtape.jpg") no-repeat 80% 0% ;
+	background-size: 180px;
 }
 #header {
 	border-bottom:1px solid #000;

@@ -25,8 +25,8 @@ include("functions.php");
    <h1>MixTape - All your friends, all their music</h1>
    <h2>See what your friends have shared on Soundcloud and listen for free to their music</h2>
    <ul>
-      <li><a>SoundCloud</a></li>
-      <li><a>Service 2</a></li>
+      <li><a href='index.php'>SoundCloud</a></li>
+      <li><a href='recom.php'>Recommendations</a></li>
       <li><a>Service 3</a></li>
       <li></li>
       <li></li>

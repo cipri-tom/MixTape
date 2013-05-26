@@ -22,19 +22,18 @@ include("functions.php");
 <body>
 
 <div id="header">
-   <p><a href="http://matthewjamestaylor.com/blog/perfect-multi-column-liquid-layouts" title="Perfect multi-column liquid layouts - iPhone compatible">&laquo; Back to the CSS article</a> by <a href="http://matthewjamestaylor.com">Matthew James Taylor</a></p>
-   <h1>The Perfect 3 Column Liquid Layout (Percentage widths)</h1>
-   <h2>No CSS hacks. SEO friendly. No Images. No JavaScript. Cross-browser &amp; iPhone compatible.</h2>
+   <h1>MixTape - All your friends, all their music</h1>
+   <h2>See what your friends have shared on Soundcloud and listen for free to their music</h2>
    <ul>
-      <li><a href="http://matthewjamestaylor.com/blog/perfect-3-column.htm" class="active">3 Column <span>Holy Grail</span></a></li>
-      <li><a href="http://matthewjamestaylor.com/blog/perfect-3-column-blog-style.htm">3 Column <span>Blog Style</span></a></li>
-      <li><a href="http://matthewjamestaylor.com/blog/perfect-2-column-left-menu.htm">2 Column <span>Left Menu</span></a></li>
-      <li><a href="http://matthewjamestaylor.com/blog/perfect-2-column-right-menu.htm">2 Column <span>Right Menu</span></a></li>
-      <li><a href="http://matthewjamestaylor.com/blog/perfect-2-column-double-page.htm">2 Column <span>Double Page</span></a></li>
-      <li><a href="http://matthewjamestaylor.com/blog/perfect-full-page.htm">1 Column <span>Full Page</span></a></li>
-      <li><a href="http://matthewjamestaylor.com/blog/perfect-stacked-columns.htm">Stacked <span>columns</span></a></li>
+      <li><a>SoundCloud</a></li>
+      <li><a>Service 2</a></li>
+      <li><a>Service 3</a></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
    </ul>
-   <p id="layoutdims">Measure columns in: <a href="http://matthewjamestaylor.com/blog/ultimate-3-column-holy-grail-pixels.htm">Pixel widths</a> | <a href="http://matthewjamestaylor.com/blog/ultimate-3-column-holy-grail-ems.htm">Em widths</a> | <strong>Percentage widths</strong></p>
+   <p id="layoutdims">Under construction | Contact: <a href="mailto:ciprian.tomoiaga@gmail.com">email</a> | Cipri Tom</p>
 </div>
 <div class="colmask threecol">
    <div class="colmid">
@@ -76,7 +75,7 @@ include("functions.php");
                     . "<a href=" . $logout_url . ">Logout</a>";
 
                echo "<br/><a id='showFriends' href='#' onClick ='loadFriends()' >Show Soundcloud friends:</a>";
-               echo "<input id ='size' type='text' size='4' value='50'> / "
+               echo "<input id ='size' type='text' size='4' value='10'> / "
                   . count($user_friends["data"])
                   . "</input>";
             }
@@ -97,41 +96,14 @@ include("functions.php");
          ?>
          <!-- Column 2 end -->
          </div>
-         <div class="col3">
+         <div class="col3" style="color:#CCC">
             <!-- Column 3 start ==== RIGHT ==== -->
             <div id="ads">
-               <a href="http://matthewjamestaylor.com">
-                  <img src="mjt-125x125.gif" width="125" border="0" height="125" alt="Art and Design by Matthew James Taylor" />
-               </a>
+               <p>ADS ADS ADS ADS ADS ADS ADS ADS  </p>
             </div>
-            <h2>Browser Compatibility</h2>
-            <p>This 3 column liquid Layout has been tested on the following browsers:</p>
-            <h3>iPhone &amp; iPod Touch</h3>
-            <ul>
-               <li>Safari</li>
-            </ul>
-            <h3>Mac</h3>
-            <ul>
-               <li>Safari</li>
-               <li>Firefox</li>
-               <li>Opera 9.25</li>
-               <li>Netscape 9.0.0.5 &amp; 7.1</li>
-            </ul>
-            <h3>Windows</h3>
-            <ul>
-               <li>Firefox 1.5, 2 &amp; 3</li>
-               <li>Safari</li>
-               <li>Opera 8.1 &amp; 9</li>
-               <li>Google Chrome</li>
-               <li>Explorer 5.5, 6 &amp; 7</li>
-               <li>Netscape 8</li>
-            </ul>
-            <h2>Valid XHTML strict markup</h2>
-            <p>The HTML in this layout validates as XHTML 1.0 strict.</p>
-            <h2>This layout is FREE for anyone to use</h2>
-            <p>That's right, you don't have to pay anything. If you are feeling generous however, link back to this page so other people can find and use this layout too.</p>
-            <h2>Centered menus compatible</h2>
-            <p>This layout is fully compatible with my <a href="http://matthewjamestaylor.com/blog/beautiful-css-centered-menus-no-hacks-full-cross-browser-support">cross-browser compatible centered menus</a>.</p>
+            <h2>Some other cool features here</h2>
+            <p>Or maybe some ads</p>
+
             <!-- Column 3 end -->
          </div>
       </div>

@@ -117,9 +117,10 @@ img {
 .col3 {
 	float:left;
 	position:relative;
-	padding:0 0 1em 0;	/* no left and right padding on columns, we just make them narrower instead 
+	padding:0 0 1em 0;	/* no left and right padding on columns, we just make them narrower instead
 					only padding top and bottom is included here, make it whatever value you need */
 	overflow:hidden;
+	min-height: 800px;
 }
 /* 3 Column settings */
 .threecol {

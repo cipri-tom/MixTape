@@ -57,7 +57,8 @@ include("functions.php");
          $facebook = new Facebook($config);
          $user_id = $facebook->getUser();
 
-         $sc_client = new Services_Soundcloud('defe41aed87b334bb8353082e4e5ae56');
+         $sc_client = new Services_Soundcloud('defe41aed87b334bb8353082e4e5ae56',
+                                              'b0334541c5a018d6dd100ab65f824d48');
 
          if($user_id) {
             // We have a user ID, so probably a logged in user.
